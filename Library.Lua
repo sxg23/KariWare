@@ -4,8 +4,8 @@ local settings = {
     default_accent = Color3.fromRGB(61, 100, 227); -- also stupid shit
 };
 
-local drawing = loadstring(game:HttpGet("https://github.com/GhostDuckyy/UI-Libraries/blob/main/DEADCELL%20REMAKE/misc/extension.lua?raw=true"))();
-local tween = loadstring(game:HttpGet("https://raw.githubusercontent.com/vozoid/utility/main/Tween.lua"))()
+local drawing = loadstring(game:HttpGet("https://raw.githubusercontent.com/sxg23/KariWare/main/Drawing.lua"))();
+local tween = loadstring(game:HttpGet("https://raw.githubusercontent.com/sxg23/KariWare/main/Tween.lua"))()
 
 -- // UI LIBRARY
 if not isfolder(settings.folder_name) then
