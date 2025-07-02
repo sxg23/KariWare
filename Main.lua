@@ -1,3 +1,5 @@
+local players = game:GetService('Players')
+
 local walkspeedToggled = false
 local flyToggled = false
 local flySpeed = 25
@@ -5,44 +7,42 @@ local Players = game.Players:GetPlayers()
 local walkSpeed = 16
 local Jheight = 50
 
-local function doWalkSpeed()
-       local players = game:GetService('Players')
 
-        local function bypassWalkSpeed()
-            if getgenv().executed then
-                print('Walkspeed Already Bypassed - Applying Settings Changes')
-                if not walkspeedToggled then
-                    return
-                end
-            else
-                getgenv().executed = true
-                print('Walkspeed Bypassed')
+local doWalkSpeed = function()
+       local function bypassWalkSpeed()
+              if getgenv().executed then
+                     print('Walkspeed Already Bypassed - Applying Settings Changes')
+              if not walkspeedToggled then
+                     return
+              end
+              else
+                     getgenv().executed = true
+                     print('Walkspeed Bypassed')
 
-                local mt = getrawmetatable(game)
-                setreadonly(mt, false)
+                     local mt = getrawmetatable(game)
+                     setreadonly(mt, false)
 
-                local oldindex = mt.__index
-                mt.__index = newcclosure(function(self, b)
-                    if b == 'WalkSpeed' then
-                        return 16
-                    end
-                    return oldindex(self, b)
-                end)
-            end
-        end
+                     local oldindex = mt.__index
+                     mt.__index = newcclosure(function(self, b)
+                     if b == 'WalkSpeed' then
+                            return 16
+                     end
+                     return oldindex(self, b)
+              end)
+       end
+end
 
+bypassWalkSpeed()
 
-        bypassWalkSpeed()
+players.LocalPlayer.CharacterAdded:Connect(function(char)
+       bypassWalkSpeed()
+       char:WaitForChild('Humanoid').WalkSpeed = walkSpeed
+end)
 
-        players.LocalPlayer.CharacterAdded:Connect(function(char)
-            bypassWalkSpeed()
-            char:WaitForChild('Humanoid').WalkSpeed = walkSpeed
-        end)
-
-        while walkspeedToggled and wait() do
-            players.LocalPlayer.Character:WaitForChild('Humanoid').WalkSpeed = walkSpeed
-        end
-        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
+while walkspeedToggled and wait() do
+       players.LocalPlayer.Character:WaitForChild('Humanoid').WalkSpeed = walkSpeed
+end
+       game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
 end
 
 local function runFly()
