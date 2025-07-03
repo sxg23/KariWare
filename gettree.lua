@@ -21,13 +21,13 @@ for _, v in pairs(workspace:GetChildren()) do
 	if v.Name == "TreeRegion" and v:FindFirstChild("Model") then
 		local model = v.Model
 		local treeClass = model:FindFirstChild("TreeClass")
-		if treeClass and treeClass.Value == "Frost" then
+		if model:FindFirstChild("RootCut") == nil and treeClass and treeClass.Value == "Frost" then
 			local cutTree = model:FindFirstChild("CutEvent")
 			-- Find axe in Backpack or Character
 			local axe = localPlayer.Backpack:FindFirstChild("Tool") or (localPlayer.Character and localPlayer.Character:FindFirstChild("Tool"))
 			local owner = model:FindFirstChild("Owner")
 			local isOwnedByPlayer = owner and (owner.Value == nil or owner.Value == localPlayer.Name)
-			if isOwnedByPlayer and model:FindFirstChild("RootCut") == nil and axe and cutTree then
+			if isOwnedByPlayer and axe and cutTree then
 				local chopTable = {
 					tool = axe,
 					faceVector = Vector3.new(1, 0, 0),
